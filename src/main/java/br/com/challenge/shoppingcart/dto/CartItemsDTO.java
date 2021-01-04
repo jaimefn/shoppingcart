@@ -1,20 +1,13 @@
-package br.com.challenge.shoppingcart.domain;
+package br.com.challenge.shoppingcart.dto;
 
-import javax.persistence.*;
+import br.com.challenge.shoppingcart.dto.product.ProductDTO;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "cart_items")
-public class CartItems extends AbsctractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CartItemsDTO {
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private CartDTO cart;
+    private ProductDTO product;
     private Integer quantity;
     private BigDecimal unitValue;
 
@@ -26,19 +19,19 @@ public class CartItems extends AbsctractAuditingEntity {
         this.id = id;
     }
 
-    public Cart getCart() {
+    public CartDTO getCart() {
         return cart;
     }
 
-    public void setCart(Cart cart) {
+    public void setCart(CartDTO cart) {
         this.cart = cart;
     }
 
-    public Product getProduct() {
+    public ProductDTO getProduct() {
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductDTO product) {
         this.product = product;
     }
 

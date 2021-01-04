@@ -1,19 +1,10 @@
-package br.com.challenge.shoppingcart.domain;
+package br.com.challenge.shoppingcart.dto;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "customer")
-public class Customer extends AbsctractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class CustomerDTO {
     private Long id;
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
     private String phone;
-    @Column(name = "document_number")
     private String documentNumber;
 
     public Long getId() {

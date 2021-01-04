@@ -1,18 +1,23 @@
-package br.com.challenge.shoppingcart.domain;
+package br.com.challenge.shoppingcart.dto.product;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "product")
-public class Product extends AbsctractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class ProductDTO {
     private Long id;
+    @NotNull @NotEmpty
     private String title;
     private String description;
+    @NotNull
     private BigDecimal value;
     private Integer stock;
+    private Boolean deleted;
+    private LocalDateTime createdDate;
 
     public Long getId() {
         return id;
@@ -52,5 +57,21 @@ public class Product extends AbsctractAuditingEntity {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 }
