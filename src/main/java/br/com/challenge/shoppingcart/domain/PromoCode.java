@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "promo_code")
-public class PromoCode extends BaseEntity {
+public class PromoCode extends AbsctractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

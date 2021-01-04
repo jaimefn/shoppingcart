@@ -6,6 +6,8 @@ public class PromoCodeDTO {
     private Long id;
     private String code;
     private BigDecimal discountPercentage;
+    private Integer quantity;
+    private String description;
 
     public Long getId() {
         return id;
@@ -29,5 +31,21 @@ public class PromoCodeDTO {
 
     public void setDiscountPercentage(BigDecimal discountPercentage) {
         this.discountPercentage = discountPercentage;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

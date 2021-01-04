@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cart")
-public class Cart extends BaseEntity {
+public class Cart extends AbsctractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
