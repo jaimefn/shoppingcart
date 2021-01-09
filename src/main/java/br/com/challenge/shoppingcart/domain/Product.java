@@ -12,7 +12,6 @@ public class Product extends AbsctractAuditingEntity {
     private String title;
     private String description;
     private BigDecimal value;
-    private Integer stock;
 
     public Long getId() {
         return id;
@@ -44,13 +43,5 @@ public class Product extends AbsctractAuditingEntity {
 
     public void setValue(BigDecimal value) {
         this.value = value;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
     }
 }

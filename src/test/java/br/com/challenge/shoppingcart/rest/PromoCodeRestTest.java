@@ -1,7 +1,7 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.ProductDTO;
-import br.com.challenge.shoppingcart.service.ProductService;
+import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.service.PromoCodeService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,16 +20,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = ProductRest.class)
-public class ProductRestTest {
-    private final String API_SUBSCRIPTON = "/api/product";
+@WebMvcTest(controllers = PromoCodeRest.class)
+public class PromoCodeRestTest {
+    private final String API_SUBSCRIPTON = "/api/promo-code";
     private URI uri;
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    ProductService productService;
+    PromoCodeService promoCodeService;
 
     @BeforeEach
     public void setup() throws URISyntaxException {
@@ -37,42 +37,49 @@ public class ProductRestTest {
     }
 
     @Test
-    public void deveSalvarUmProduto_RetornarStatusCreated() throws Exception {
-        String jsonToSend = Utils.parseObjToJson(getMockProductDTO());
+    public void deveFalharQuandoCodeForNuloOuVazio_RetornarBadRequest() throws Exception {
+        URI uri = new URI(API_SUBSCRIPTON);
+        PromoCodeDTO promoCodeDTO = getMockPromoCodeDTO();
+        promoCodeDTO.setCode(" ");
+        String jsonToSend = Utils.parseObjToJson(promoCodeDTO);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post(uri)
+                .content(jsonToSend)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void deveFalharQuandoDescontoForNulo_RetornarBadRequest() throws Exception {
+        URI uri = new URI(API_SUBSCRIPTON);
+        PromoCodeDTO promoCodeDTO = getMockPromoCodeDTO();
+        promoCodeDTO.setDiscountPercentage(null);
+        String jsonToSend = Utils.parseObjToJson(promoCodeDTO);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post(uri)
+                .content(jsonToSend)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void deveSalvarUmPromoCode_RetornarStatusOk() throws Exception {
+        URI uri = new URI(API_SUBSCRIPTON);
+        PromoCodeDTO promoCodeDTO = getMockPromoCodeDTO();
+        String jsonToSend = Utils.parseObjToJson(promoCodeDTO);
         mockMvc.perform(MockMvcRequestBuilders
                 .post(uri)
                 .content(jsonToSend)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
-
-    @Test
-    public void deveFalharQuandoTitleForNuloOuVazio_RetornarBadRequest() throws Exception {
-        URI uri = new URI(API_SUBSCRIPTON);
-        ProductDTO productDTO = getMockProductDTO();
-        productDTO.setTitle(null);
-        String jsonToSend = Utils.parseObjToJson(productDTO);
-        mockMvc.perform(MockMvcRequestBuilders
-                .post(uri)
-                .content(jsonToSend)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
-
-    @Test
-    public void deveFalharQuandoValorForNulo_RetornarBadRequest() throws Exception {
-        URI uri = new URI(API_SUBSCRIPTON);
-        ProductDTO productDTO = getMockProductDTO();
-        productDTO.setValue(null);
-        String jsonToSend = Utils.parseObjToJson(productDTO);
-        mockMvc.perform(MockMvcRequestBuilders
-                .post(uri)
-                .content(jsonToSend)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
-
-    private ProductDTO getMockProductDTO(){
-        return new ProductDTO("Title","Description",new BigDecimal(200));
+    private PromoCodeDTO getMockPromoCodeDTO(){
+        PromoCodeDTO promoCodeDTO = new PromoCodeDTO();
+        promoCodeDTO.setId(null);
+        promoCodeDTO.setDescription("description");
+        promoCodeDTO.setCode("CodeXPTO");
+        promoCodeDTO.setDiscountPercentage(new BigDecimal(200));
+        promoCodeDTO.setQuantity(10);
+        return promoCodeDTO;
     }
 }

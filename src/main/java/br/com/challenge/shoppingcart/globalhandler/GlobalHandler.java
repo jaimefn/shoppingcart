@@ -1,6 +1,6 @@
 package br.com.challenge.shoppingcart.globalhandler;
 
-import br.com.challenge.shoppingcart.dto.validation.ErrorDTO;
+import br.com.challenge.shoppingcart.dto.ErrorDTO;
 import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
