@@ -1,16 +1,11 @@
 package br.com.challenge.shoppingcart.service;
 
-import br.com.challenge.shoppingcart.domain.Product;
-import br.com.challenge.shoppingcart.dto.product.ProductDTO;
-import br.com.challenge.shoppingcart.repository.ProductRepository;
+import br.com.challenge.shoppingcart.dto.ProductDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -84,7 +79,6 @@ public class ProductServiceTest {
         productDTO.setTitle("Title");
         productDTO.setDescription("Description");
         productDTO.setValue(new BigDecimal(200));
-        productDTO.setStock(10);
         return productDTO;
     }
 }

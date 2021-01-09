@@ -1,7 +1,7 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.domain.Product;
-import br.com.challenge.shoppingcart.dto.product.ProductDTO;
+import br.com.challenge.shoppingcart.dto.ProductDTO;
 import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
 import br.com.challenge.shoppingcart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
