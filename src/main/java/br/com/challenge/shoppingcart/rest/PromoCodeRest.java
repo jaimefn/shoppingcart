@@ -1,9 +1,8 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.service.PromoCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class PromoCodeRest {
     @RequestMapping(value = "/promo-code/{code}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByIdPromoCode(@PathVariable String code){
+    public ResponseEntity<?> getByCode(@PathVariable String code){
         return new ResponseEntity<>(promoCodeService.getByCode(code), HttpStatus.OK);
     }
 }

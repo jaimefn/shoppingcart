@@ -1,6 +1,7 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.ProductDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
 import br.com.challenge.shoppingcart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -27,13 +28,13 @@ public class ProductRest {
     @RequestMapping(value = "/product",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO){
+    public ResponseEntity<?> createProduct(@Valid @RequestBody ProductReqDTO productDTO){
         return new ResponseEntity<>(productService.create(productDTO), HttpStatus.CREATED);
     }
     @RequestMapping(value = "/product/{id}",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductDTO productDTO, @PathVariable Long id){
+    public ResponseEntity<?> updateProduct(@Valid @RequestBody ProductReqDTO productDTO, @PathVariable Long id){
         return new ResponseEntity<>(productService.update(id, productDTO), HttpStatus.OK);
     }
     @RequestMapping(value = "/product/{id}",
@@ -52,7 +53,7 @@ public class ProductRest {
     @RequestMapping(value = "/product/{title}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByIdProduct(@PathVariable String title, Pageable pageable){
+    public ResponseEntity<?> getByTitleProduct(@PathVariable String title, Pageable pageable){
         return new ResponseEntity<>(productService.getByTitle(title, pageable), HttpStatus.OK);
     }
 }

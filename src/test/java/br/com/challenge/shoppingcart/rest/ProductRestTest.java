@@ -1,6 +1,7 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.ProductDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
 import br.com.challenge.shoppingcart.service.ProductService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,7 +50,7 @@ public class ProductRestTest {
     @Test
     public void deveFalharQuandoTitleForNuloOuVazio_RetornarBadRequest() throws Exception {
         URI uri = new URI(API_SUBSCRIPTON);
-        ProductDTO productDTO = getMockProductDTO();
+        ProductReqDTO productDTO = getMockProductDTO();
         productDTO.setTitle(null);
         String jsonToSend = Utils.parseObjToJson(productDTO);
         mockMvc.perform(MockMvcRequestBuilders
@@ -62,7 +63,7 @@ public class ProductRestTest {
     @Test
     public void deveFalharQuandoValorForNulo_RetornarBadRequest() throws Exception {
         URI uri = new URI(API_SUBSCRIPTON);
-        ProductDTO productDTO = getMockProductDTO();
+        ProductReqDTO productDTO = getMockProductDTO();
         productDTO.setValue(null);
         String jsonToSend = Utils.parseObjToJson(productDTO);
         mockMvc.perform(MockMvcRequestBuilders
@@ -72,7 +73,7 @@ public class ProductRestTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
-    private ProductDTO getMockProductDTO(){
-        return new ProductDTO("Title","Description",new BigDecimal(200));
+    private ProductReqDTO getMockProductDTO(){
+        return new ProductReqDTO("Title","Description",new BigDecimal(200));
     }
 }

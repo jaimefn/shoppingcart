@@ -1,24 +1,23 @@
-package br.com.challenge.shoppingcart.domain;
+package br.com.challenge.shoppingcart.dto.product;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "product")
-public class Product extends AbsctractAuditingEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ProductReqDTO {
+    @NotBlank
     private String title;
     private String description;
+    @NotNull
     private BigDecimal value;
 
-    public Long getId() {
-        return id;
-    }
+    public ProductReqDTO(){}
 
-    public void setId(Long id) {
-        this.id = id;
+    public ProductReqDTO(String title, String description, BigDecimal value){
+        this.title = title;
+        this.description = description;
+        this.value = value;
     }
 
     public String getTitle() {

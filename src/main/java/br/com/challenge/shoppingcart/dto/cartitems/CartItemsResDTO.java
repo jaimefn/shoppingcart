@@ -1,17 +1,23 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.cartitems;
+
+import br.com.challenge.shoppingcart.dto.cart.CartDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 
-public class CartItemsDTO {
+public class CartItemsResDTO {
     private Long id;
+    @JsonIgnore
     private CartDTO cart;
-    private ProductDTO product;
+    private ProductResDTO product;
     private Integer quantity;
     private BigDecimal unitValue;
 
-    public CartItemsDTO(){}
+    public CartItemsResDTO(){}
 
-    public CartItemsDTO(CartDTO cartDTO, ProductDTO productDTO, Integer quantity, BigDecimal unitValue ){
+    public CartItemsResDTO(CartDTO cartDTO, ProductResDTO productDTO, Integer quantity, BigDecimal unitValue ){
         this.cart = cartDTO;
         this.product = productDTO;
         this.quantity = quantity;
@@ -34,11 +40,11 @@ public class CartItemsDTO {
         this.cart = cart;
     }
 
-    public ProductDTO getProduct() {
+    public ProductResDTO getProduct() {
         return product;
     }
 
-    public void setProduct(ProductDTO product) {
+    public void setProduct(ProductResDTO product) {
         this.product = product;
     }
 

@@ -1,28 +1,25 @@
 package br.com.challenge.shoppingcart.service;
 
-import br.com.challenge.shoppingcart.domain.CartItems;
-import br.com.challenge.shoppingcart.dto.*;
-import br.com.challenge.shoppingcart.exceptions.CartNotFoundException;
+import br.com.challenge.shoppingcart.dto.cart.CartDTO;
+import br.com.challenge.shoppingcart.dto.cartitems.CartItemsResDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CartServiceTest {
-    private ProductDTO product_A;
-    private ProductDTO product_B;
-    private ProductDTO product_C;
     private CartDTO cartDTO;
 
     private CartService cartService;
@@ -36,7 +33,6 @@ public class CartServiceTest {
 
     @BeforeEach
     public void before(){
-        createProducts();
         cartDTO = getMockedCartDTO();
         cartDTO = saveCart(cartDTO);
     }
@@ -48,16 +44,11 @@ public class CartServiceTest {
         assertTrue(newCart != null);
         assertTrue(newCart.getCartItems().size() == 3);
     }
-    @Test
-    public void deveDeletarUmCarrinho(){
 
-        cartService.delete(cartDTO.getId());
-        assertThrows(CartNotFoundException.class,()-> getCartById(1L));
-    }
     @Test
     public void deveBuscarUmCarrinho(){
-        Long ID = cartDTO.getId();
-        CartDTO cart = getCartById(ID);
+        final Long ID = cartDTO.getId();
+        CartDTO cart = cartService.getById(ID);
         assertTrue(cart.getId().equals(ID));
     }
 
@@ -65,20 +56,18 @@ public class CartServiceTest {
         return cartService.create(cartDTO);
     }
 
-    private CartDTO getCartById(Long id){
-        CartDTO cart = cartService.getById(id);
-        checkIfCartExist(cart);
-        return cart;
-    }
-
     private CartDTO getMockedCartDTO(){
 
         CartDTO cartDTO = new CartDTO();
 
-        List<CartItemsDTO> cartItemsList = new ArrayList<>();
-        CartItemsDTO cartItems_A = new CartItemsDTO(cartDTO,product_A,1,product_A.getValue());
-        CartItemsDTO cartItems_B = new CartItemsDTO(cartDTO,product_B,1,product_B.getValue());
-        CartItemsDTO cartItems_C = new CartItemsDTO(cartDTO,product_C,1,product_C.getValue());
+        ProductResDTO product_A = productService.create(new ProductReqDTO("Product_A","Product A description",new BigDecimal(100)));
+        ProductResDTO product_B = productService.create(new ProductReqDTO("Product_B","Product B description",new BigDecimal(200)));
+        ProductResDTO product_C = productService.create(new ProductReqDTO("Product_C","Product C description",new BigDecimal(300)));
+
+        List<CartItemsResDTO> cartItemsList = new ArrayList<>();
+        CartItemsResDTO cartItems_A = new CartItemsResDTO(cartDTO,product_A,1,product_A.getValue());
+        CartItemsResDTO cartItems_B = new CartItemsResDTO(cartDTO,product_B,1,product_B.getValue());
+        CartItemsResDTO cartItems_C = new CartItemsResDTO(cartDTO,product_C,1,product_C.getValue());
         cartItemsList.add(cartItems_A);
         cartItemsList.add(cartItems_B);
         cartItemsList.add(cartItems_C);
@@ -89,19 +78,4 @@ public class CartServiceTest {
 
         return cartDTO;
     }
-
-    private void createProducts(){
-        product_A = new ProductDTO("Product_A","Product A description",new BigDecimal(100));
-        product_B = new ProductDTO("Product_B","Product B description",new BigDecimal(200));
-        product_C = new ProductDTO("Product_C","Product C description",new BigDecimal(300));
-        product_A = productService.create(product_A);
-        product_B = productService.create(product_B);
-        product_C = productService.create(product_C);
-    }
-    private void checkIfCartExist(CartDTO cart){
-        if(cart == null){
-            throw new CartNotFoundException();
-        }
-    }
-
 }

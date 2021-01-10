@@ -1,4 +1,4 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ProductDTO {
+public class ProductResDTO {
     private Long id;
     @NotBlank
     private String title;
@@ -20,16 +20,6 @@ public class ProductDTO {
     private BigDecimal value;
     private Boolean deleted = false;
     private LocalDateTime createdDate;
-
-    public ProductDTO(){}
-
-    public ProductDTO(String title, String description, BigDecimal value){
-        this.id = null;
-        this.title = title;
-        this.description = description;
-        this.value = value;
-        this.deleted = false;
-    }
     
     public Long getId() {
         return id;

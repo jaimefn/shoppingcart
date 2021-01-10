@@ -1,4 +1,4 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.customer;
 
 public class CustomerDTO {
     private Long id;

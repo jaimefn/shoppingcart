@@ -1,9 +1,7 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.domain.PromoCode;
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
-import br.com.challenge.shoppingcart.exceptions.PromoCodeNotFoundException;
-import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.repository.PromoCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ public class PromoCodeService extends BaseService {
 
     @Transactional
     public PromoCodeDTO create(PromoCodeDTO promoCodeDTO){
+        checkIfCodeAlreadyExist(promoCodeDTO.getCode());
         PromoCode promoCode = modelMapper.map(promoCodeDTO,PromoCode.class);
         promoCode.setId(null);
         return modelMapper.map(save(promoCode),PromoCodeDTO.class);
@@ -43,7 +42,7 @@ public class PromoCodeService extends BaseService {
 
     public PromoCodeDTO getByCode(String code) {
         PromoCode promoCode = promoCodeRepository.findFirstByCodeAndDeletedFalse(code)
-                .orElseThrow(PromoCodeNotFoundException::new);
+                .orElseThrow(()-> new  IllegalArgumentException("error.promoCode.not.found"));
         return modelMapper.map(promoCode,PromoCodeDTO.class);
     }
 
@@ -58,6 +57,11 @@ public class PromoCodeService extends BaseService {
 
     private PromoCode findById(Long id){
         return promoCodeRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(PromoCodeNotFoundException::new);
+                .orElseThrow(()-> new IllegalArgumentException("error.promoCode.not.found"));
+    }
+    private void checkIfCodeAlreadyExist(String code){
+       if(promoCodeRepository.findFirstByCodeAndDeletedFalse(code).isPresent()){
+           throw new IllegalArgumentException("error.code.already.exist");
+       }
     }
 }

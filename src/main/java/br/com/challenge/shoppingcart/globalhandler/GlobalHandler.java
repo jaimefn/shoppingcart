@@ -1,8 +1,9 @@
 package br.com.challenge.shoppingcart.globalhandler;
 
-import br.com.challenge.shoppingcart.dto.ErrorDTO;
-import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
+import br.com.challenge.shoppingcart.dto.error.ErrorValidationDTO;
+import br.com.challenge.shoppingcart.dto.error.FieldValidationDTO;
 
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -27,19 +28,20 @@ public class GlobalHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> fieldValidation(MethodArgumentNotValidException exception) {
         List<FieldError> fieldErrorList = exception.getBindingResult().getFieldErrors();
-        List<ErrorDTO> errorDTOList = new ArrayList<>();
+        List<FieldValidationDTO> errorDTOList = new ArrayList<>();
         fieldErrorList.forEach(e->{
             String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErrorDTO errorDTO = new ErrorDTO(e.getField(),message);
+            FieldValidationDTO errorDTO = new FieldValidationDTO(e.getField(),message, exception.getClass().getSimpleName());
             errorDTOList.add(errorDTO);
         });
         return new ResponseEntity<>(errorDTOList,HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserNotFoundException.class})
+    @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> userNotFoundException(RuntimeException exception) {
-        Map<String, String> message = new HashMap<>();
-        message.put("Error",exception.getClass().getSimpleName() );
-        return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
+        Map<String, String> mapMessage = new HashMap<>();
+        String message = Strings.isNullOrEmpty(exception.getMessage()) ? exception.getClass().getSimpleName() : exception.getMessage();
+        ErrorValidationDTO errorDTO = new ErrorValidationDTO(message, exception.getClass().getSimpleName());
+        return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
     }
 }

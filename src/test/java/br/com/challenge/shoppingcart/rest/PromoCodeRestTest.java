@@ -1,6 +1,6 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.service.PromoCodeService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +78,7 @@ public class PromoCodeRestTest {
         promoCodeDTO.setId(null);
         promoCodeDTO.setDescription("description");
         promoCodeDTO.setCode("CodeXPTO");
-        promoCodeDTO.setDiscountPercentage(new BigDecimal(200));
+        promoCodeDTO.setDiscountPercentage(new BigDecimal(50));
         promoCodeDTO.setQuantity(10);
         return promoCodeDTO;
     }

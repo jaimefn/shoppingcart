@@ -1,12 +1,14 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.error;
 
-public class ErrorDTO {
+public class FieldValidationDTO {
     private String field;
     private String message;
+    private String exception;
 
-    public ErrorDTO(String field, String message) {
+    public FieldValidationDTO(String field, String message, String exception) {
         this.field = field;
         this.message = message;
+        this.exception = exception;
     }
 
     public String getField() {
@@ -23,5 +25,13 @@ public class ErrorDTO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getException() {
+        return exception;
+    }
+
+    public void setException(String exception) {
+        this.exception = exception;
     }
 }

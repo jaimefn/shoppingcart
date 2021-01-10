@@ -18,6 +18,15 @@ public class CartItems extends AbsctractAuditingEntity {
     private Integer quantity;
     private BigDecimal unitValue;
 
+    public CartItems(){}
+
+    public CartItems(Cart cart, Product product, Integer quantity){
+        this.cart = cart;
+        this.product = product;
+        this. quantity = quantity;
+        this.unitValue = product.getValue();
+    }
+
     public Long getId() {
         return id;
     }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "customer")
 public class Customer extends AbsctractAuditingEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
     private String firstName;

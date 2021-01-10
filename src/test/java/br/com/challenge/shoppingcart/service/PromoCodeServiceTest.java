@@ -1,15 +1,13 @@
 package br.com.challenge.shoppingcart.service;
 
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
-import br.com.challenge.shoppingcart.exceptions.PromoCodeNotFoundException;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
-import java.util.Optional;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,8 +23,8 @@ public class PromoCodeServiceTest {
 
     @BeforeEach
     public void before(){
-        promoCodeDTO = getMockedPromoCodeDTO();
-        promoCodeDTO = savePromoCode(promoCodeDTO);
+        PromoCodeDTO mokedPromoCode = getMockedPromoCodeDTO();
+        promoCodeDTO = savePromoCode(mokedPromoCode);
     }
 
     @Test
@@ -38,21 +36,21 @@ public class PromoCodeServiceTest {
     @Test
     public void deveAtualizarUmPromoCode(){
         final Integer NEW_QUANTITY = 20;
-        PromoCodeDTO promoCodeDTO = getPromoCodeByCode("xpto");
-        promoCodeDTO.setQuantity(NEW_QUANTITY);
-        PromoCodeDTO promoCode = promoCodeService.update(promoCodeDTO.getId(), promoCodeDTO);
-        assertEquals(NEW_QUANTITY, promoCode.getQuantity());
+        PromoCodeDTO oldPromoCodeDTO = getPromoCodeByCode(promoCodeDTO.getCode());
+        oldPromoCodeDTO.setQuantity(NEW_QUANTITY);
+        PromoCodeDTO updatedPromoCode = promoCodeService.update(promoCodeDTO.getId(), oldPromoCodeDTO);
+        assertEquals(NEW_QUANTITY, updatedPromoCode.getQuantity());
     }
     @Test
     public void deveDeletarUmPromoCode(){
         promoCodeService.delete(promoCodeDTO.getId());
-        assertThrows(PromoCodeNotFoundException.class,()->{getPromoCodeById(promoCodeDTO.getId());});
+        assertThrows(IllegalArgumentException.class,()->{getPromoCodeById(promoCodeDTO.getId());});
     }
     @Test
     public void deveBuscarUmPromoCode(){
-        String CODE = "xpto";
-        PromoCodeDTO promoCodeDTO = getPromoCodeByCode(CODE);
-        assertEquals(CODE, promoCodeDTO.getCode());
+        String CODE = promoCodeDTO.getCode();
+        PromoCodeDTO foundedPromoCode = getPromoCodeByCode(CODE);
+        assertEquals(CODE, foundedPromoCode.getCode());
     }
 
     private PromoCodeDTO savePromoCode(PromoCodeDTO promoCodeDTO){
@@ -60,29 +58,21 @@ public class PromoCodeServiceTest {
     }
 
     private PromoCodeDTO getPromoCodeByCode(String code){
-        PromoCodeDTO promoCodeDTO = promoCodeService.getByCode(code);
-        checkIfPromoCodeExist(promoCodeDTO);
-        return promoCodeDTO;
+        return promoCodeService.getByCode(code);
     }
 
     private PromoCodeDTO getPromoCodeById(Long id){
-        PromoCodeDTO promoCodeDTO = promoCodeService.getById(id);
-        checkIfPromoCodeExist(promoCodeDTO);
-        return promoCodeDTO;
-    }
-
-    private void checkIfPromoCodeExist(PromoCodeDTO promoCodeDTO) {
-        if(promoCodeDTO == null){
-            throw new PromoCodeNotFoundException();
-        }
+       return promoCodeService.getById(id);
     }
 
     private PromoCodeDTO getMockedPromoCodeDTO(){
+        Random rd = new Random();
+        String code = String.valueOf(rd.nextInt(1000));
         PromoCodeDTO promoCodeDTO = new PromoCodeDTO();
         promoCodeDTO.setId(null);
-        promoCodeDTO.setCode("xpto");
+        promoCodeDTO.setCode(code);
         promoCodeDTO.setDescription("Description");
-        promoCodeDTO.setDiscountPercentage(new BigDecimal(200));
+        promoCodeDTO.setDiscountPercentage(new BigDecimal(20));
         promoCodeDTO.setQuantity(10);
         return promoCodeDTO;
     }
