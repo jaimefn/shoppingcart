@@ -8,8 +8,6 @@ import br.com.challenge.shoppingcart.dto.cart.CartDTO;
 import br.com.challenge.shoppingcart.dto.cartitems.AddProductDTO;
 import br.com.challenge.shoppingcart.dto.cartitems.UpdateQuantityDTO;
 import br.com.challenge.shoppingcart.dto.promocode.PromoCodeApplyDTO;
-import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
-import br.com.challenge.shoppingcart.exceptions.CartNotFoundException;
 import br.com.challenge.shoppingcart.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,13 +55,32 @@ public class CartService extends BaseService {
     public CartDTO getById(Long id) {
         return modelMapper.map(findById(id),CartDTO.class);
     }
+
     @Transactional
     public CartDTO addProductToCart(Long cartId, AddProductDTO addProductDTO) {
         Cart cart = findById(cartId);
         Product product = productService.getById(addProductDTO.getProductId());
+        if(isProductAlreadyIntoCart(cart, product)){
+           cart = increaseOneUnitToItemQuantity(cart, product);
+        }else{
+           cart = addProductToCart(cart, product);
+        }
+        return modelMapper.map(cartRepository.save(cart), CartDTO.class);
+    }
+
+    private Cart addProductToCart(Cart cart, Product product){
         CartItems newProduct = new CartItems(cart, product, 1);
         cart.getCartItems().add(newProduct);
-        return modelMapper.map(cartRepository.save(cart),CartDTO.class);
+        return cart;
+    }
+
+    private Boolean isProductAlreadyIntoCart(Cart cart, Product product) {
+        return cart.getCartItems().stream().anyMatch(item->item.getProduct().getId().equals(product.getId()));
+    }
+
+    private Cart increaseOneUnitToItemQuantity(Cart cart, Product product) {
+       cart.getCartItems().stream().filter(item->item.getProduct().getId().equals(product.getId())).findFirst().ifPresent(item->item.setQuantity(item.getQuantity()+1));
+       return cart;
     }
 
     @Transactional
@@ -76,7 +93,7 @@ public class CartService extends BaseService {
     @Transactional
     public CartDTO removeItemCart(Long cartId, Long itemId) {
         Cart cart = findById(cartId);
-        CartItems itemToRemove = cart.getCartItems().stream().filter(i->i.getId().equals(itemId)).findFirst().orElseThrow(IllegalArgumentException::new);
+        CartItems itemToRemove = cart.getCartItems().stream().filter(i->i.getId().equals(itemId)).findFirst().orElseThrow(()->new IllegalArgumentException("error.cartitem.not.found"));
         cart.getCartItems().remove(itemToRemove);
         return modelMapper.map(cartRepository.save(cart),CartDTO.class);
     }
@@ -98,6 +115,6 @@ public class CartService extends BaseService {
 
     private Cart findById(Long id){
         return cartRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(CartNotFoundException::new);
+                .orElseThrow(()->new IllegalArgumentException("error.cart.not.found"));
     }
 }

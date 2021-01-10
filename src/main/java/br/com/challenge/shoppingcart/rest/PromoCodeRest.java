@@ -46,7 +46,7 @@ public class PromoCodeRest {
     @RequestMapping(value = "/promo-code/{code}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByIdPromoCode(@PathVariable String code){
+    public ResponseEntity<?> getByCode(@PathVariable String code){
         return new ResponseEntity<>(promoCodeService.getByCode(code), HttpStatus.OK);
     }
 }

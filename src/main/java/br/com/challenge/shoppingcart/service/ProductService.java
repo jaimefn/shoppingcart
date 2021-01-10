@@ -1,8 +1,8 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.domain.Product;
-import br.com.challenge.shoppingcart.dto.product.ProductDTO;
-import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
+import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
 import br.com.challenge.shoppingcart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,18 +21,18 @@ public class ProductService extends BaseService {
     }
 
     @Transactional
-    public ProductDTO create(ProductDTO productDTO){
+    public ProductResDTO create(ProductReqDTO productDTO){
         Product product = modelMapper.map(productDTO,Product.class);
         product.setId(null);
-        return modelMapper.map(save(product),ProductDTO.class);
+        return modelMapper.map(save(product), ProductResDTO.class);
     }
 
     @Transactional
-    public ProductDTO update(Long id, ProductDTO productDTO) {
+    public ProductResDTO update(Long id, ProductReqDTO productDTO) {
         Product product = findByIdAndDeletedFalse(id);
         modelMapper.map(productDTO, product);
         product.setId(id);
-        return modelMapper.map(save(product),ProductDTO.class);
+        return modelMapper.map(save(product), ProductResDTO.class);
     }
 
     @Transactional
@@ -42,12 +42,12 @@ public class ProductService extends BaseService {
         save(product);
     }
 
-    public Page<ProductDTO> getAll(Pageable pageable) {
-        return productRepository.findAllByDeletedFalse(pageable).map(p -> modelMapper.map(p,ProductDTO.class));
+    public Page<ProductResDTO> getAll(Pageable pageable) {
+        return productRepository.findAllByDeletedFalse(pageable).map(p -> modelMapper.map(p, ProductResDTO.class));
     }
 
-    public Page<ProductDTO> getByTitle(String title, Pageable pageable) {
-        return productRepository.findAllByTitleIsContainingAndDeletedFalse(title, pageable).map(p->modelMapper.map(p,ProductDTO.class));
+    public Page<ProductResDTO> getByTitle(String title, Pageable pageable) {
+        return productRepository.findAllByTitleIsContainingAndDeletedFalse(title, pageable).map(p->modelMapper.map(p, ProductResDTO.class));
     }
 
     public Product getById(Long productId) {
@@ -60,6 +60,6 @@ public class ProductService extends BaseService {
 
     private Product findByIdAndDeletedFalse(Long id){
         return productRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(()->new IllegalArgumentException("error.product.not.found"));
     }
 }

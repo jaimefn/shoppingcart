@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Table(name = "promo_code")
 public class PromoCode extends AbsctractAuditingEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
     @Column(name = "discount_percentage")

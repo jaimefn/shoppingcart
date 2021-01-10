@@ -8,7 +8,7 @@ import java.util.List;
 @Table(name = "cart")
 public class Cart extends AbsctractAuditingEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")

@@ -34,28 +34,29 @@ public class CartRest {
     @RequestMapping(value = "/cart/{cartId}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByIdCart(@PathVariable Long cartId){
+    public ResponseEntity<?> getCartById(@PathVariable Long cartId){
         return new ResponseEntity<>(cartService.getById(cartId), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cart/{cartId}/add",
+    @RequestMapping(value = "/cart/{cartId}/add-item",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addItemCart(@Valid @RequestBody AddProductDTO addProductDTO, @PathVariable Long cartId){
-        return new ResponseEntity<>(cartService.addProductToCart(cartId, addProductDTO), HttpStatus.OK);
+    public ResponseEntity<?> addNewCartItemOrUpdateQuantityIfItemAlreadyExistInTheCart(@Valid @RequestBody AddProductDTO addProductDTO, @PathVariable Long cartId){
+        CartDTO cartDTO = cartService.addProductToCart(cartId, addProductDTO);
+        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cart/{cartId}/item-cart/{itemId}/update-quantity",
+    @RequestMapping(value = "/cart/{cartId}/item-cart/{itemId}/quantity",
             method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateQuantityItemCart(@Valid @RequestBody UpdateQuantityDTO updateQuantityDTO, @PathVariable Long cartId, @PathVariable Long itemId){
-        return new ResponseEntity<>(cartService.updateQuantityItemCart(cartId, itemId, updateQuantityDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> updateCartItemQuantity(@Valid @RequestBody UpdateQuantityDTO updateQuantityDTO, @PathVariable Long cartId, @PathVariable Long itemId){
+        return new ResponseEntity<>(cartService.updateQuantityItemCart(cartId, itemId, updateQuantityDTO), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/cart/{cartId}/item-cart/{itemId}/remove",
+    @RequestMapping(value = "/cart/{cartId}/item-cart/{itemId}/remove-item",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> removeItemCart(@PathVariable Long cartId, @PathVariable Long itemId){
+    public ResponseEntity<?> removeCartItem(@PathVariable Long cartId, @PathVariable Long itemId){
         return new ResponseEntity<>(cartService.removeItemCart(cartId, itemId), HttpStatus.CREATED);
     }
 
@@ -63,13 +64,13 @@ public class CartRest {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> applyPromoCode(@RequestBody PromoCodeApplyDTO promoCodeApplyDTO, @PathVariable Long cartId){
-        return new ResponseEntity<>(cartService.applyPromoCode(cartId, promoCodeApplyDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(cartService.applyPromoCode(cartId, promoCodeApplyDTO), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/cart/{cartId}/promo-code/{promocodeId}/remove",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> removePromoCode(@PathVariable Long cartId, @PathVariable Long promocodeId){
-        return new ResponseEntity<>(cartService.removePromoCode(cartId, promocodeId), HttpStatus.CREATED);
+        return new ResponseEntity<>(cartService.removePromoCode(cartId, promocodeId), HttpStatus.OK);
     }
 }

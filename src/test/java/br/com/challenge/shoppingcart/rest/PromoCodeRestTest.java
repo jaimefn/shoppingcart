@@ -78,7 +78,7 @@ public class PromoCodeRestTest {
         promoCodeDTO.setId(null);
         promoCodeDTO.setDescription("description");
         promoCodeDTO.setCode("CodeXPTO");
-        promoCodeDTO.setDiscountPercentage(new BigDecimal(200));
+        promoCodeDTO.setDiscountPercentage(new BigDecimal(50));
         promoCodeDTO.setQuantity(10);
         return promoCodeDTO;
     }

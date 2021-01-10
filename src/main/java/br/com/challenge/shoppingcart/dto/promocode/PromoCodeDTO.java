@@ -1,15 +1,17 @@
 package br.com.challenge.shoppingcart.dto.promocode;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class PromoCodeDTO {
+    @JsonIgnore
     private Long id;
-
     @NotBlank
     private String code;
+    @Max(value = 100)
+    @Min(value = 0)
     @NotNull
     private BigDecimal discountPercentage;
     @NotNull
