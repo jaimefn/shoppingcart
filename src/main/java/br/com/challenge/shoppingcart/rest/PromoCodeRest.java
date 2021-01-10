@@ -1,9 +1,8 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.service.PromoCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

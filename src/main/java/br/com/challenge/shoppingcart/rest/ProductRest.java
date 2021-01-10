@@ -1,6 +1,6 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.ProductDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductDTO;
 import br.com.challenge.shoppingcart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

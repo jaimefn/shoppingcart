@@ -1,4 +1,4 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.error;
 
 public class ErrorDTO {
     private String field;

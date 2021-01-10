@@ -1,4 +1,7 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.cart;
+
+import br.com.challenge.shoppingcart.dto.cartitems.CartItemsResDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -8,11 +11,11 @@ public class CartDTO {
     private Long id;
     private PromoCodeDTO promoCode;
     private BigDecimal totalValue= new BigDecimal(0);
-    private List<CartItemsDTO> cartItems = new ArrayList<>();
+    private List<CartItemsResDTO> cartItems = new ArrayList<>();
 
     public CartDTO(){}
 
-    public CartDTO(PromoCodeDTO promoCode, List<CartItemsDTO> cartItems){
+    public CartDTO(PromoCodeDTO promoCode, List<CartItemsResDTO> cartItems){
         this.promoCode = promoCode;
         if(cartItems != null) {
             cartItems.forEach(c->c.setCart(this));
@@ -43,11 +46,11 @@ public class CartDTO {
         this.promoCode = promoCode;
     }
 
-    public List<CartItemsDTO> getCartItems() {
+    public List<CartItemsResDTO> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(List<CartItemsDTO> cartItems) {
+    public void setCartItems(List<CartItemsResDTO> cartItems) {
         this.cartItems = cartItems;
     }
 }

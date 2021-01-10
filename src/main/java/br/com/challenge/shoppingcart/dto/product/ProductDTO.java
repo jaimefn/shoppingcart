@@ -1,4 +1,4 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

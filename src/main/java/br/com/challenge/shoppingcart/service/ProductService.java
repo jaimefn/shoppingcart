@@ -1,7 +1,7 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.domain.Product;
-import br.com.challenge.shoppingcart.dto.ProductDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductDTO;
 import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
 import br.com.challenge.shoppingcart.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ProductService extends BaseService {
 
     @Transactional
     public ProductDTO update(Long id, ProductDTO productDTO) {
-        Product product = findById(id);
+        Product product = findByIdAndDeletedFalse(id);
         modelMapper.map(productDTO, product);
         product.setId(id);
         return modelMapper.map(save(product),ProductDTO.class);
@@ -37,7 +37,7 @@ public class ProductService extends BaseService {
 
     @Transactional
     public void delete(Long id) {
-        Product product = findById(id);
+        Product product = findByIdAndDeletedFalse(id);
         product.setDeleted(true);
         save(product);
     }
@@ -50,11 +50,15 @@ public class ProductService extends BaseService {
         return productRepository.findAllByTitleIsContainingAndDeletedFalse(title, pageable).map(p->modelMapper.map(p,ProductDTO.class));
     }
 
+    public Product getById(Long productId) {
+        return findByIdAndDeletedFalse(productId);
+    }
+
     private Product save(Product product){
         return productRepository.save(product);
     }
 
-    private Product findById(Long id){
+    private Product findByIdAndDeletedFalse(Long id){
         return productRepository.findByIdAndDeletedFalse(id)
                 .orElseThrow(UserNotFoundException::new);
     }

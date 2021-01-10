@@ -1,4 +1,4 @@
-package br.com.challenge.shoppingcart.dto;
+package br.com.challenge.shoppingcart.dto.promocode;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

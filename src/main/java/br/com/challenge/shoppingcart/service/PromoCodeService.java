@@ -1,9 +1,8 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.domain.PromoCode;
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.exceptions.PromoCodeNotFoundException;
-import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
 import br.com.challenge.shoppingcart.repository.PromoCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

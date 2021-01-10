@@ -1,7 +1,6 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.CartDTO;
-import br.com.challenge.shoppingcart.dto.CustomerDTO;
+import br.com.challenge.shoppingcart.dto.cart.CartDTO;
 import br.com.challenge.shoppingcart.service.CartService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 

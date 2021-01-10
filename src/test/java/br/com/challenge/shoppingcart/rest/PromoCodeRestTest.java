@@ -1,6 +1,6 @@
 package br.com.challenge.shoppingcart.rest;
 
-import br.com.challenge.shoppingcart.dto.PromoCodeDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.service.PromoCodeService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;

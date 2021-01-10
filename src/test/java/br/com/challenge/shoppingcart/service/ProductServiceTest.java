@@ -1,6 +1,6 @@
 package br.com.challenge.shoppingcart.service;
 
-import br.com.challenge.shoppingcart.dto.ProductDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

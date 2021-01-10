@@ -1,6 +1,7 @@
 package br.com.challenge.shoppingcart.globalhandler;
 
-import br.com.challenge.shoppingcart.dto.ErrorDTO;
+import br.com.challenge.shoppingcart.dto.error.ErrorDTO;
+import br.com.challenge.shoppingcart.exceptions.CartNotFoundException;
 import br.com.challenge.shoppingcart.exceptions.UserNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class GlobalHandler {
         return new ResponseEntity<>(errorDTOList,HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UserNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, CartNotFoundException.class, IllegalArgumentException.class})
     public ResponseEntity<?> userNotFoundException(RuntimeException exception) {
         Map<String, String> message = new HashMap<>();
         message.put("Error",exception.getClass().getSimpleName() );

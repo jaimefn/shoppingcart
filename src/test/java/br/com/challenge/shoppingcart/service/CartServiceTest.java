@@ -1,20 +1,18 @@
 package br.com.challenge.shoppingcart.service;
 
-import br.com.challenge.shoppingcart.domain.CartItems;
-import br.com.challenge.shoppingcart.dto.*;
+import br.com.challenge.shoppingcart.dto.cart.CartDTO;
+import br.com.challenge.shoppingcart.dto.cartitems.CartItemsResDTO;
+import br.com.challenge.shoppingcart.dto.product.ProductDTO;
+import br.com.challenge.shoppingcart.dto.promocode.PromoCodeDTO;
 import br.com.challenge.shoppingcart.exceptions.CartNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,10 +73,10 @@ public class CartServiceTest {
 
         CartDTO cartDTO = new CartDTO();
 
-        List<CartItemsDTO> cartItemsList = new ArrayList<>();
-        CartItemsDTO cartItems_A = new CartItemsDTO(cartDTO,product_A,1,product_A.getValue());
-        CartItemsDTO cartItems_B = new CartItemsDTO(cartDTO,product_B,1,product_B.getValue());
-        CartItemsDTO cartItems_C = new CartItemsDTO(cartDTO,product_C,1,product_C.getValue());
+        List<CartItemsResDTO> cartItemsList = new ArrayList<>();
+        CartItemsResDTO cartItems_A = new CartItemsResDTO(cartDTO,product_A,1,product_A.getValue());
+        CartItemsResDTO cartItems_B = new CartItemsResDTO(cartDTO,product_B,1,product_B.getValue());
+        CartItemsResDTO cartItems_C = new CartItemsResDTO(cartDTO,product_C,1,product_C.getValue());
         cartItemsList.add(cartItems_A);
         cartItemsList.add(cartItems_B);
         cartItemsList.add(cartItems_C);
