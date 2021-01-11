@@ -19,7 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = CartRest.class)
+@WebMvcTest(controllers = CartResources.class)
 public class CartRestTest {
     private final String API_SUBSCRIPTON = "/api/cart";
     private URI uri;

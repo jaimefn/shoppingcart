@@ -13,6 +13,14 @@ public class Product extends AbsctractAuditingEntity {
     private String description;
     private BigDecimal value;
 
+    public Product(){}
+
+    public Product(String title, String description, BigDecimal value){
+        this.title = title;
+        this.description = description;
+        this.value = value;
+    }
+
     public Long getId() {
         return id;
     }

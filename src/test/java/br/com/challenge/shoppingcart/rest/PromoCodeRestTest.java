@@ -20,7 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = PromoCodeRest.class)
+@WebMvcTest(controllers = PromoCodeResources.class)
 public class PromoCodeRestTest {
     private final String API_SUBSCRIPTON = "/api/promo-code";
     private URI uri;

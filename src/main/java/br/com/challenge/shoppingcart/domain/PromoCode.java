@@ -32,7 +32,8 @@ public class PromoCode extends AbsctractAuditingEntity {
     }
 
     public BigDecimal getDiscountPercentage() {
-        return discountPercentage;
+
+        return (discountPercentage == null) ? BigDecimal.ZERO : this.discountPercentage;
     }
 
     public void setDiscountPercentage(BigDecimal discountPercentage) {

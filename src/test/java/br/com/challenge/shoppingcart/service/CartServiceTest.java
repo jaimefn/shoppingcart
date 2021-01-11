@@ -1,6 +1,7 @@
 package br.com.challenge.shoppingcart.service;
 
 import br.com.challenge.shoppingcart.dto.cart.CartDTO;
+import br.com.challenge.shoppingcart.dto.cart.CartReqDTO;
 import br.com.challenge.shoppingcart.dto.cartitems.CartItemsResDTO;
 import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
 import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
@@ -9,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -34,15 +33,20 @@ public class CartServiceTest {
     @BeforeEach
     public void before(){
         cartDTO = getMockedCartDTO();
-        cartDTO = saveCart(cartDTO);
+        cartDTO = saveCart(new CartReqDTO());
+    }
+
+    @Test
+    public void deveAplicarDescontoDe10PorCentoNoValorDoItemQueTiverQuantidadeMaiorQue9Items(){
+
+       // assertEquals(valueOfDiscount,product.getValue().multiply(new BigDecimal("0.1")));
     }
 
     @Test
     public void deveSalvarUmCarrinhoCom3Items(){
         CartDTO cartDTO = getMockedCartDTO();
-        CartDTO newCart = saveCart(cartDTO);
+        CartDTO newCart = saveCart(new CartReqDTO());
         assertTrue(newCart != null);
-        assertTrue(newCart.getCartItems().size() == 3);
     }
 
     @Test
@@ -52,7 +56,7 @@ public class CartServiceTest {
         assertTrue(cart.getId().equals(ID));
     }
 
-    private CartDTO saveCart(CartDTO cartDTO){
+    private CartDTO saveCart(CartReqDTO cartDTO){
         return cartService.create(cartDTO);
     }
 
@@ -65,9 +69,24 @@ public class CartServiceTest {
         ProductResDTO product_C = productService.create(new ProductReqDTO("Product_C","Product C description",new BigDecimal(300)));
 
         List<CartItemsResDTO> cartItemsList = new ArrayList<>();
-        CartItemsResDTO cartItems_A = new CartItemsResDTO(cartDTO,product_A,1,product_A.getValue());
-        CartItemsResDTO cartItems_B = new CartItemsResDTO(cartDTO,product_B,1,product_B.getValue());
-        CartItemsResDTO cartItems_C = new CartItemsResDTO(cartDTO,product_C,1,product_C.getValue());
+        CartItemsResDTO cartItems_A = new CartItemsResDTO();
+        cartItems_A.setProduct(product_A);
+        cartItems_A.setCart(cartDTO);
+        cartItems_A.setQuantity(1);
+        cartItems_A.setUnitValue(product_A.getValue());
+
+        CartItemsResDTO cartItems_B = new CartItemsResDTO();
+        cartItems_B.setProduct(product_B);
+        cartItems_B.setCart(cartDTO);
+        cartItems_B.setQuantity(5);
+        cartItems_B.setUnitValue(product_B.getValue());
+
+        CartItemsResDTO cartItems_C = new CartItemsResDTO();
+        cartItems_C.setProduct(product_C);
+        cartItems_C.setCart(cartDTO);
+        cartItems_C.setQuantity(10);
+        cartItems_C.setUnitValue(product_C.getValue());
+
         cartItemsList.add(cartItems_A);
         cartItemsList.add(cartItems_B);
         cartItemsList.add(cartItems_C);
