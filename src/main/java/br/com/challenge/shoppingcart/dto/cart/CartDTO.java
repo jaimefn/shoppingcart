@@ -10,20 +10,11 @@ import java.util.List;
 public class CartDTO {
     private Long id;
     private PromoCodeDTO promoCode;
-    private BigDecimal totalValue= new BigDecimal(0);
+    private BigDecimal totalValueWithoutDiscount = BigDecimal.ZERO;
+    private BigDecimal totalValueWithDiscount = BigDecimal.ZERO;
+    private BigDecimal globalDiscountValue = BigDecimal.ZERO;
+    private BigDecimal discountPercentage = BigDecimal.ZERO;
     private List<CartItemsResDTO> cartItems = new ArrayList<>();
-
-    public CartDTO(){}
-
-    public CartDTO(PromoCodeDTO promoCode, List<CartItemsResDTO> cartItems){
-        this.promoCode = promoCode;
-        if(cartItems != null) {
-            cartItems.forEach(c->c.setCart(this));
-            this.cartItems = cartItems;
-        }
-    }
-
-
 
     public Long getId() {
         return id;
@@ -33,9 +24,8 @@ public class CartDTO {
         this.id = id;
     }
 
-    public BigDecimal getTotalValue() {
-        cartItems.forEach(c->totalValue.add(c.getUnitValue().multiply(new BigDecimal(c.getQuantity()))));
-        return totalValue;
+    public BigDecimal getTotalValueWithDiscount() {
+        return totalValueWithDiscount;
     }
 
     public PromoCodeDTO getPromoCode() {
@@ -52,5 +42,33 @@ public class CartDTO {
 
     public void setCartItems(List<CartItemsResDTO> cartItems) {
         this.cartItems = cartItems;
+    }
+
+    public BigDecimal getTotalValueWithoutDiscount() {
+        return totalValueWithoutDiscount;
+    }
+
+    public void setTotalValueWithoutDiscount(BigDecimal totalValueWithoutDiscount) {
+        this.totalValueWithoutDiscount = totalValueWithoutDiscount;
+    }
+
+    public BigDecimal getGlobalDiscountValue() {
+        return globalDiscountValue;
+    }
+
+    public void setGlobalDiscountValue(BigDecimal globalDiscountValue) {
+        this.globalDiscountValue = globalDiscountValue;
+    }
+
+    public void setTotalValueWithDiscount(BigDecimal totalValueWithDiscount) {
+        this.totalValueWithDiscount = totalValueWithDiscount;
+    }
+
+    public BigDecimal getDiscountPercentage() {
+        return discountPercentage;
+    }
+
+    public void setDiscountPercentage(BigDecimal discountPercentage) {
+        this.discountPercentage = discountPercentage;
     }
 }

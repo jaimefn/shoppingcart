@@ -1,7 +1,6 @@
 package br.com.challenge.shoppingcart.rest;
 
 import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
-import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
 import br.com.challenge.shoppingcart.service.ProductService;
 import br.com.challenge.shoppingcart.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = ProductRest.class)
+@WebMvcTest(controllers = ProductResources.class)
 public class ProductRestTest {
     private final String API_SUBSCRIPTON = "/api/product";
     private URI uri;

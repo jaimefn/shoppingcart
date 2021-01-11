@@ -1,7 +1,6 @@
 package br.com.challenge.shoppingcart.dto.cartitems;
 
 import br.com.challenge.shoppingcart.dto.cart.CartDTO;
-import br.com.challenge.shoppingcart.dto.product.ProductReqDTO;
 import br.com.challenge.shoppingcart.dto.product.ProductResDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,15 +13,9 @@ public class CartItemsResDTO {
     private ProductResDTO product;
     private Integer quantity;
     private BigDecimal unitValue;
-
-    public CartItemsResDTO(){}
-
-    public CartItemsResDTO(CartDTO cartDTO, ProductResDTO productDTO, Integer quantity, BigDecimal unitValue ){
-        this.cart = cartDTO;
-        this.product = productDTO;
-        this.quantity = quantity;
-        this.unitValue = unitValue;
-    }
+    private BigDecimal itemDiscountValue;
+    private BigDecimal totalValueWithDiscount;
+    private BigDecimal totalValueWithoutDiscount;
 
     public Long getId() {
         return id;
@@ -62,5 +55,29 @@ public class CartItemsResDTO {
 
     public void setUnitValue(BigDecimal unitValue) {
         this.unitValue = unitValue;
+    }
+
+    public BigDecimal getItemDiscountValue() {
+        return itemDiscountValue;
+    }
+
+    public void setItemDiscountValue(BigDecimal itemDiscountValue) {
+        this.itemDiscountValue = itemDiscountValue;
+    }
+
+    public BigDecimal getTotalValueWithDiscount() {
+        return totalValueWithDiscount;
+    }
+
+    public void setTotalValueWithDiscount(BigDecimal totalValueWithDiscount) {
+        this.totalValueWithDiscount = totalValueWithDiscount;
+    }
+
+    public BigDecimal getTotalValueWithoutDiscount() {
+        return totalValueWithoutDiscount;
+    }
+
+    public void setTotalValueWithoutDiscount(BigDecimal totalValueWithoutDiscount) {
+        this.totalValueWithoutDiscount = totalValueWithoutDiscount;
     }
 }

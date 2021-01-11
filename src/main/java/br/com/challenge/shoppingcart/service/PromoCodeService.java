@@ -22,7 +22,7 @@ public class PromoCodeService extends BaseService {
         checkIfCodeAlreadyExist(promoCodeDTO.getCode());
         PromoCode promoCode = modelMapper.map(promoCodeDTO,PromoCode.class);
         promoCode.setId(null);
-        return modelMapper.map(save(promoCode),PromoCodeDTO.class);
+        return modelMapper.map(save(promoCode), PromoCodeDTO.class);
     }
 
     @Transactional
@@ -30,7 +30,7 @@ public class PromoCodeService extends BaseService {
         PromoCode promoCode = findById(id);
         modelMapper.map(promoCodeDTO, promoCode);
         promoCode.setId(id);
-        return modelMapper.map(save(promoCode),PromoCodeDTO.class);
+        return modelMapper.map(save(promoCode), PromoCodeDTO.class);
     }
 
     @Transactional
@@ -43,12 +43,12 @@ public class PromoCodeService extends BaseService {
     public PromoCodeDTO getByCode(String code) {
         PromoCode promoCode = promoCodeRepository.findFirstByCodeAndDeletedFalse(code)
                 .orElseThrow(()-> new  IllegalArgumentException("error.promoCode.not.found"));
-        return modelMapper.map(promoCode,PromoCodeDTO.class);
+        return modelMapper.map(promoCode, PromoCodeDTO.class);
     }
 
     public PromoCodeDTO getById(Long id) {
         PromoCode promoCode = findById(id);
-        return modelMapper.map(promoCode,PromoCodeDTO.class);
+        return modelMapper.map(promoCode, PromoCodeDTO.class);
     }
 
     private PromoCode save(PromoCode promoCode){

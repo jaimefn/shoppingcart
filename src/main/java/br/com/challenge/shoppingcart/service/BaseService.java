@@ -5,5 +5,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseService {
     @Autowired
-    ModelMapper modelMapper;
+    public ModelMapper modelMapper;
 }

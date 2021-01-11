@@ -15,13 +15,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api")
-public class ProductRest {
+public class ProductResources {
 
 
     private ProductService productService;
 
     @Autowired
-    public ProductRest(ProductService productService){
+    public ProductResources(ProductService productService){
         this.productService = productService;
     }
 

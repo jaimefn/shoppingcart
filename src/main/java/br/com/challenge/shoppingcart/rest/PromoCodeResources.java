@@ -12,12 +12,12 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api")
-public class PromoCodeRest {
+public class PromoCodeResources {
 
     private PromoCodeService promoCodeService;
 
     @Autowired
-    public PromoCodeRest(PromoCodeService promoCodeService){
+    public PromoCodeResources(PromoCodeService promoCodeService){
         this.promoCodeService = promoCodeService;
     }
 

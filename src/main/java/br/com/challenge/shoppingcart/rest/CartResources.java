@@ -1,6 +1,7 @@
 package br.com.challenge.shoppingcart.rest;
 
 import br.com.challenge.shoppingcart.dto.cart.CartDTO;
+import br.com.challenge.shoppingcart.dto.cart.CartReqDTO;
 import br.com.challenge.shoppingcart.dto.cartitems.AddProductDTO;
 import br.com.challenge.shoppingcart.dto.cartitems.UpdateQuantityDTO;
 import br.com.challenge.shoppingcart.dto.promocode.PromoCodeApplyDTO;
@@ -15,19 +16,19 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/api")
-public class CartRest {
+public class CartResources {
 
     private CartService cartService;
 
     @Autowired
-    public CartRest(CartService cartService){
+    public CartResources(CartService cartService){
         this.cartService = cartService;
     }
 
     @RequestMapping(value = "/cart",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createCart(@Valid @RequestBody CartDTO cartDTO){
+    public ResponseEntity<?> createCart(@Valid @RequestBody CartReqDTO cartDTO){
         return new ResponseEntity<>(cartService.create(cartDTO), HttpStatus.CREATED);
     }
 
